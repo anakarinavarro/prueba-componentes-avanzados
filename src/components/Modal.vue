@@ -1,169 +1,160 @@
 <template>
-  <v-row justify="center">
-    <v-form>
-        <v-dialog
-      v-model="dialog"
-      persistent
-      max-width="600px"
-    >
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn
-          color="primary"
-          dark
-          v-bind="attrs"
-          v-on="on"
+    <v-container>   
+        <h1>Editar Curso</h1>
+        <v-row>
+            <v-col col="12">
+
+             <v-form
+             ref="form"
+             v-model="valid"
+             lazy-validation
         >
-          Open Dialog
-        </v-btn>
-      </template>
-      <v-card>
-          <v-card-title>
-              <span class="text-h5">Agregando Curso</span>
-        </v-card-title>
-        <v-card-text>
-            <v-container>
-                <v-row>
-                    <v-col
-                cols="12"
-                sm="6"
-                md="4"
-              >
-                <v-text-field
-                  label="Nombre"
-                  required
-                  v-model="AddCourses.name"
-                ></v-text-field>
-              </v-col>
-              <v-col
-                cols="12"
-                sm="6"
-                md="4"
-              >
-                <v-text-field
-                  label="Url del curso"
-                  required
-                  v-model="AddCourses.url"
-                ></v-text-field>
-              </v-col>
-               <v-col
-                cols="12"
-                sm="6"
-                md="4"
-              >
-                <v-text-field
-                  label="Duracion del curso"
-                  required
-                  v-model="AddCourses.tiempo"
-                ></v-text-field>
-              </v-col>
-               <v-col
-                cols="12"
-              >
-                <v-text-field
-                  label="Codigo del curso del curso"
-                  required
-                  v-model="AddCourses.codigo"
-                ></v-text-field>
-              </v-col>
-              
-              <v-col
-                cols="12"
-                sm="6"
-              >
-                <v-select
-                  :items="['0-17', '18-29', '30-54', '54+']"
-                  label="Cupos del curso"
-                  required
-                  v-model="AddCourses.cupos"
-                ></v-select>
-              </v-col>
-              <v-col
-                cols="12"
-                sm="6"
-              >
-               <v-select
-                  :items="['0-17', '18-29', '30-54', '54+']"
-                  label="Inscritos en el curso"
-                  required
-                  v-model="AddCourses.inscritos"
-                ></v-select>
-              </v-col>
-               <v-col
-                cols="12"
-                sm="6"
-              >
-                <v-select
-                  :items="['0-17', '18-29', '30-54', '54+']"
-                  label="Costo del curso"
-                  required
-                  v-model="AddCourses.costo"
-                ></v-select>
-              </v-col>
-               <v-col
-                cols="12"
-                sm="6"
-                md="6"
-              >
-                <v-text-field
-                  label="Descripcion del curso"
-                  required
-                  v-model="AddCourses.descripcion"
-                ></v-text-field>
-              </v-col>
-            </v-row>
-          </v-container>
-         
-        </v-card-text>
-        <v-card-actions>
-            <v-spacer></v-spacer>
-          <v-btn color="success" class="mr-4"  @click="dialog = false">
-              Agregar
-              </v-btn>
+            <v-text-field
+            v-model="name"
+            :counter="10"
+            :rules="nameRules"
+            label="Name"
+            required
+            ></v-text-field>
 
-              <v-btn color="error" class="mr-4" @click="reset"> Limpiar Formulario </v-btn>
+            <v-text-field
+            v-model="url"
+            :counter="10"
+            :rules="urlRules"
+            label="Url de la Imagen"
+            required
+            ></v-text-field>
 
-              <v-btn color="warning" @click="resetValidation"> Limpiar Validation </v-btn>
-             <v-btn
-            color="blue darken-1"
-            text
-            @click="dialog = false"
-          >
-            Close
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-            </v-form>
-  </v-row>
+            <v-text-field
+            v-model="cupos"
+            :counter="10"
+            :rules="cuposRules"
+            label="Cupos del Curso"
+            required
+            ></v-text-field>
+
+            <v-text-field
+            v-model="inscritos"
+            :counter="10"
+            :rules="inscritosRules"
+            label="Incritos en el Curso"
+            required
+            ></v-text-field>
+
+            <v-text-field
+            v-model="duracion"
+            :counter="10"
+            :rules="duracionRules"
+            label="Duración del Curso"
+            required
+            ></v-text-field>
+
+            <v-text-field
+            v-model="costo"
+            :counter="10"
+            :rules="costoRules"
+            label="Costo del Curso"
+            required
+            ></v-text-field>
+
+            <v-text-field
+            v-model="codigo"
+            :counter="10"
+            :rules="codigoRules"
+            label="Codigo del Curso"
+            required
+            ></v-text-field>
+
+            <v-container fluid>
+                <v-textarea
+            counter
+            label="Descripcion"
+            :rules="descripcionRules"
+            :value="value"
+            ></v-textarea>
+        </v-container>
+
+            <v-text-field
+            v-model="fecha"
+            :counter="10"
+            :rules="fechaRules"
+            label="Fecha del Curso"
+            required
+            ></v-text-field>
+
+        
+            <v-btn
+            :disabled="!valid"
+            color="success"
+            class="mr-4"
+            @click="validate"
+            >
+            Guardar
+            </v-btn>
+
+            <v-btn
+            color="error"
+            class="mr-4"
+            @click="reset"
+            >
+            Reset Form
+            </v-btn>
+
+            <v-btn
+            color="warning"
+            @click="resetValidation"
+            >
+            Reset Validation
+            </v-btn>
+        </v-form>
+        </v-col>
+       </v-row>
+     </v-container>
 </template>
 
 <script>
-export default {
-    data: () => ({
-      dialog: false,
-      name:"",
-      url:"",
-      tiempo:"",
-      codigo:"",
+  export default {
+      data: () => ({
+          valid: true,
+      name: '',
+      nameRules: [
+        v => !!v || 'Name is required',
+        v => (v && v.length <= 10) || 'Name must be less than 10 characters',
+      ],
+      descripcion:"",
+       descripcionRules: [v => v.length <= 25 || 'Max 50 characters'],
+       costo:"",
+       costoRules:  [v => v.length <= 10 || 'Max 10 characters'],
+      value: 'Hello!',
+      duracion:"",
+      duracionRules:  [v => v.length <= 10 || 'Max 10 characters'],
       cupos:"",
-      inscritos:"",
-      costo:"",
-      descripcion:""
-
-
+      cuposRules:  [v => v.length <= 10 || 'Max 10 characters'],
+      inscritos: "",
+      inscritosRules:  [v => v.length <= 10 || 'Max 10 characters'],
+      url: "",
+      urlRules: [v => v.length <= 25 || 'Max 50 characters'],
+      codigo:"",
+      codigoRules: [v => v.length <= 10 || 'Max 10 characters'],
+      fecha:"",
+      fechaRules:[v => v.length <= 10 || 'Max 10 characters'],
+     
     }),
-     methods: {
-    
-    reset() {
-      this.$refs.form.reset();
+
+    methods: {
+      validate () {
+        this.$refs.form.validate()
+      },
+      reset () {
+        this.$refs.form.reset()
+      },
+      resetValidation () {
+        this.$refs.form.resetValidation()
+      },
     },
-    resetValidation() {
-      this.$refs.form.resetValidation();
-    },
-  },
   }
 </script>
-};
 </script>
 
 <style></style>
+
