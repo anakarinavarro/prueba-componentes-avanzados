@@ -31,5 +31,15 @@ export const moduleCursos = {
         commit("SET_LOADING", false);
       }
     },
+    async updateOneById({ commit }, { id, ...newList }) {
+      commit("SET_LOADING", true);
+      try {
+        await DB.collection("cursos").doc(id).update(newList);
+      } catch (error) {
+        console.error(e);
+      } finally {
+        commit("SET_LOADING", false);
+      }
+    },
   },
 };

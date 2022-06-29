@@ -30,7 +30,7 @@ const routes = [
 
     component: () => import("../views/CursosView.vue"),
     meta: {
-      accessLevel: "public",
+      accessLevel: "private",
     },
   },
   {
@@ -39,7 +39,7 @@ const routes = [
 
     component: () => import("../views/AdminView.vue"),
     meta: {
-      accessLevel: "public",
+      accessLevel: "private",
     },
   },
 
@@ -49,13 +49,16 @@ const routes = [
 
     component: () => import("../views/EditView.vue"),
     meta: {
-      accessLevel: "private",
+      accessLevel: "public",
     },
   },
   {
     path: "/:pathMatch(.*)*",
     name: "Error",
     component: () => import("../views/ErrorView.vue"),
+    meta: {
+      accessLevel: "public",
+    },
   },
 ];
 

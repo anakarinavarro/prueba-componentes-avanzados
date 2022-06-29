@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <div><p v-if="user">
-    Sesion activa: {{ user.email }}
+    Sesion activa: {{ user.email }} - link para administrar => <router-link to="/AdminView">Administar</router-link>
   </p></div>
     <h1 >Lista de Cursos</h1>
     <v-row justify="space-around">

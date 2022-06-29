@@ -59,8 +59,8 @@
                     md="4"
                   >
                     <v-text-field
-                      v-model="editedItem.calories"
-                      label="Calories"
+                      v-model="editedItem.cupos"
+                      label="Cupos"
                     ></v-text-field>
                   </v-col>
                   <v-col
@@ -69,8 +69,8 @@
                     md="4"
                   >
                     <v-text-field
-                      v-model="editedItem.fat"
-                      label="Fat (g)"
+                      v-model="editedItem.inscritos"
+                      label="Inscritos"
                     ></v-text-field>
                   </v-col>
                   <v-col
@@ -79,8 +79,8 @@
                     md="4"
                   >
                     <v-text-field
-                      v-model="editedItem.carbs"
-                      label="Carbs (g)"
+                      v-model="editedItem.duracion"
+                      label="Duración"
                     ></v-text-field>
                   </v-col>
                   <v-col
@@ -89,8 +89,28 @@
                     md="4"
                   >
                     <v-text-field
-                      v-model="editedItem.protein"
-                      label="Protein (g)"
+                      v-model="editedItem.costo"
+                      label="Costo"
+                    ></v-text-field>
+                  </v-col>
+                   <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                    <v-text-field
+                      v-model="editedItem.terminado"
+                      label="Terminado"
+                    ></v-text-field>
+                  </v-col>
+                   <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                    <v-text-field
+                      v-model="editedItem.fecha"
+                      label="Fecha"
                     ></v-text-field>
                   </v-col>
                 </v-row>
@@ -116,9 +136,10 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
+      <!--modal-->
         <v-dialog v-model="dialogDelete" max-width="500px">
           <v-card>
-            <v-card-title class="text-h5">Are you sure you want to delete this item?</v-card-title>
+            <v-card-title class="text-h5">Estas seguro de que quieres eliminar este Item?</v-card-title>
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="blue darken-1" text @click="closeDelete">Cancelar</v-btn>
@@ -162,7 +183,7 @@
   <script>
   import { mapState, mapActions } from 'vuex'
     export default {
-
+      
     data: () => ({
       dialog: false,
       dialogDelete: false,
@@ -202,6 +223,9 @@
         fecha: 0,
       },
     }),
+     created(){
+       this.getAllCursos()
+     },
 
     computed: {
       ...mapState("cursos", {
