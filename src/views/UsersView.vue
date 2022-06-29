@@ -4,9 +4,8 @@
       <v-row justify="center">
         <v-col cols="12" md="10">
           <v-sheet class="pa-12" elevation="12">
-            <h2>Login de Usuario</h2>
-
-            <v-form ref="form" v-model="valid" lazy-validation @submit.prevent="registrar()">
+            <h2>Registro de Usuario</h2>
+            <v-form ref="formUp" v-model="valid" lazy-validation @submit.prevent="crearCuenta()">
               <v-text-field
                 v-model="credenciales.email"
                 :rules="emailRules"
@@ -25,16 +24,19 @@
                 @click:append="show1 = !show1"
               ></v-text-field>
 
-              <v-btn :disabled="!valid" color="success" class="mr-4" type="submit">
-                Ingresar
+              <v-btn
+                :disabled="!valid"
+                color="success"
+                class="mr-4"
+                @click="validate"
+                type="submit"
+              >
+                Registrar
               </v-btn>
 
               <v-btn color="error" class="mr-4" @click="reset"> Limpiar Formulario </v-btn>
 
               <v-btn color="warning" @click="resetValidation"> Limpiar Validation </v-btn>
-              <router-link to="/UsersView" class="ml-4">
-                <v-btn color="info">Registrate</v-btn>
-              </router-link>
             </v-form>
           </v-sheet>
         </v-col>
@@ -59,33 +61,31 @@ export default {
     show1: false,
     rules: {
       required: (value) => !!value || "Required.",
-      min: (v) => v.length >= 6 || "Min 8 characters",
+      min: (v) => v.length >= 8 || "Min 8 characters",
       emailMatch: () => `The email and password you entered don't match`,
     },
   }),
 
   methods: {
-    validate() {
-      this.$refs.form.validate();
-    },
-    reset() {
-      this.$refs.form.reset();
-    },
-    resetValidation() {
-      this.$refs.form.resetValidation();
-    },
-    ...mapActions("users", ["signInWithEmailAndPassword"]),
-    async registrar() {
-      if (this.$refs.form.validate()) {
-        await this.signInWithEmailAndPassword(this.credenciales);
-        this.valid = false;
-        this.credenciales = {
-          email: "",
-          password: "",
-        };
+    ...mapActions("users", ["createUserWithEmailAndPassword"]),
+    async crearCuenta() {
+      if (this.$refs.formUp.validate()) {
+        await this.createUserWithEmailAndPassword(this.credenciales);
       }
       this.$router.push("/CursosView");
     },
+    validate() {
+      this.$refs.formUp.validate();
+    },
+    reset() {
+      this.$refs.formUp.reset();
+    },
+    resetValidation() {
+      this.$refs.formUp.resetValidation();
+    },
+  },
+  mounted() {
+    this.$store.dispatch("users/subscribeToAuthStateChange");
   },
 };
 </script>
