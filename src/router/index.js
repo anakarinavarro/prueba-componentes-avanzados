@@ -42,16 +42,15 @@ const routes = [
       accessLevel: "private",
     },
   },
-
   {
-    path: "/EditView",
+    path: "/AdminView/:Id",
     name: "EditView",
-
     component: () => import("../views/EditView.vue"),
     meta: {
       accessLevel: "public",
     },
   },
+
   {
     path: "/:pathMatch(.*)*",
     name: "Error",

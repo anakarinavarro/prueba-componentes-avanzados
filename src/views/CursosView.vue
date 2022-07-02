@@ -1,100 +1,42 @@
 <template>
-  <v-container>
-    <div><p v-if="user">
-    Sesion activa: {{ user.email }} - link para administrar => <router-link to="/AdminView">Administar</router-link>
-  </p></div>
-    <h1 >Lista de Cursos</h1>
-    <v-row justify="space-around">
-        <v-col cols="12" md="3">
-            <v-card width="400">
-                <v-img
-          height="200px"
-          src="https://cdn.pixabay.com/photo/2020/07/12/07/47/bee-5396362_1280.jpg"
-        >
-          <v-card-title class="white--text mt-8">
-              <v-avatar size="56">
-                  <img
-                alt="user"
-                src="https://cdn.pixabay.com/photo/2020/06/24/19/12/cabbage-5337431_1280.jpg"
-              >
-            </v-avatar>
-          </v-card-title>
-        </v-img>
-        <v-card-text>
-            <div class="font-weight-bold ml-8 mb-2">
-                Today
-          </div>
-
-          <v-timeline
-            align-top
-            dense
-          >
-            <v-timeline-item
-              v-for="message in messages"
-              :key="message.time"
-              :color="message.color"
-              small
-            >
-              <div>
-                  <div class="font-weight-normal">
-                  <strong>{{ message.from }}</strong> @{{ message.time }}
-                </div>
-                <div>{{ message.message }}</div>
-              </div>
-            </v-timeline-item>
-          </v-timeline>
-        </v-card-text>
-      </v-card>
-                    </v-col>
-    </v-row>
-  </v-container>
+  <v-layout>
+    <v-container>
+      <v-row>
+        <v-col>
+          <h1>Listado de cursos</h1>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-flex v-for="curso in cursos" :key="curso.id">
+          <CardCursos :value="curso" />
+        </v-flex>
+      </v-row>
+    </v-container>
+  </v-layout>
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex";
+import CardCursos from "@/components/CardCursos.vue";
 
-import { mapState, mapActions } from 'vuex'
 export default {
- 
-    data: () => ({
-      messages: [
-        {
-          from: 'You',
-          message: `Sure, I'll see you later.`,
-          time: '10:42am',
-          color: 'deep-purple lighten-1',
-        },
-        {
-          from: 'John Doe',
-          message: 'Yeah, sure. Does 1:00pm work?',
-          time: '10:37am',
-          color: 'green',
-        },
-        {
-          from: 'You',
-          message: 'Did you still want to grab lunch today?',
-          time: '9:47am',
-          color: 'deep-purple lighten-1',
-        },
-      ],
-    }),
-    computed: {
-       ...mapState("users", ["user"]),
+  components: { CardCursos },
+  computed: {
+    ...mapState("users", ["user"]),
     ...mapState("cursos", {
-      curso: (state)=>state.list,
-      loading: (state)=> state.loading
-    })
-  },
-   methods: {
-    ...mapActions('cursos', {
-      
-      getAllCursos: 'getAll',
+      cursos: (state) => state.list,
+      loading: (state) => state.loading,
     }),
-   
   },
-  
-  }
-</script>
+  methods: {
+    ...mapActions("cursos", {
+      getAllCursos: "getAll",
+    }),
+  },
 
+  mounted() {
+    this.getAllCursos();
+  },
 };
 </script>
 

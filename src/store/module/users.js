@@ -43,10 +43,6 @@ export const usersModule = {
 
       try {
         await firebase.auth().createUserWithEmailAndPassword(newUser.email, newUser.password);
-        await firebase.firestore().collection("usuarios").doc(newUser.email).set({
-          name: "",
-          role: "user",
-        });
       } catch (error) {
         console.error(error);
       } finally {
