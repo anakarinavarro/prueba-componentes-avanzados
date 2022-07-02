@@ -22,7 +22,7 @@
           <v-list-item-icon>
             <v-icon> mdi-account-plus</v-icon>
           </v-list-item-icon>
-          <v-list-item-title>Aministracion</v-list-item-title>
+          <v-list-item-title>Administracion</v-list-item-title>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>

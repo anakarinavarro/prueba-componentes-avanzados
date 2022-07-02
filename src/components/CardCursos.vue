@@ -1,6 +1,6 @@
 <template>
-  <v-card width="400">
-    <v-img :src="value.img"> </v-img>
+  <v-card>
+    <v-img :src="value.url" height="250"></v-img>
     <v-card-text>
       <p class="subtitle-1">{{ value.name }}</p>
       <div class="font-weight-bold ml-8 mb-2">Información</div>

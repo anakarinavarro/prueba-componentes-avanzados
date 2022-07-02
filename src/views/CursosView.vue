@@ -7,9 +7,9 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-flex v-for="curso in cursos" :key="curso.id">
+        <v-col cols="12" sm="4" v-for="curso in cursos" :key="curso.id">
           <CardCursos :value="curso" />
-        </v-flex>
+        </v-col>
       </v-row>
     </v-container>
   </v-layout>
